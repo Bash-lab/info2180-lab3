@@ -28,6 +28,24 @@ document.addEventListener('DOMContentLoaded', function() {
         return null;
     }
     
+    // Exercise 5: New Game button functionality
+    const newGameButton = document.querySelector('.btn');
+    newGameButton.addEventListener('click', function() {
+        // Reset game state
+        gameState = Array(9).fill(null);
+        currentPlayer = 'X';
+        
+        // Clear board visually
+        boardSquares.forEach(square => {
+            square.textContent = '';
+            square.classList.remove('X', 'O');
+        });
+        
+        // Reset status message
+        statusElement.textContent = 'Move your mouse over a square and click to play an X or an O.';
+        statusElement.classList.remove('you-won');
+    });
+    
     boardSquares.forEach((square, index) => {
         // Exercise 3: Add hover effects
         square.addEventListener('mouseenter', function() {
