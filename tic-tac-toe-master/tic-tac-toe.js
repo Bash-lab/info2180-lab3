@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Get all the div elements inside the game board
+    // Exercise 1: Add square class to each board div
     const boardSquares = document.querySelectorAll('#board div');
+    const statusElement = document.getElementById('status');
     
-    // Add the 'square' class to each board div
     boardSquares.forEach(square => {
         square.classList.add('square');
     });
@@ -10,6 +10,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Exercise 2: Add X or O when clicked
     let currentPlayer = 'X';
     let gameState = Array(9).fill(null);
+    
+    // Exercise 4: Winning combinations
+    const winningCombinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+        [0, 4, 8], [2, 4, 6]             // diagonals
+    ];
+    
+    function checkWinner() {
+        for (let combination of winningCombinations) {
+            const [a, b, c] = combination;
+            if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+                return gameState[a];
+            }
+        }
+        return null;
+    }
     
     boardSquares.forEach((square, index) => {
         // Exercise 3: Add hover effects
@@ -23,9 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.remove('hover');
         });
         
-        // Exercise 2: Click handler
+        // Exercise 2 & 4: Click handler with win checking
         square.addEventListener('click', function() {
-             // Only proceed if square is empty
             if (gameState[index] === null) {
                 // Update game state
                 gameState[index] = currentPlayer;
@@ -33,6 +49,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Update visual representation
                 square.textContent = currentPlayer;
                 square.classList.add(currentPlayer);
+                
+                // Exercise 4: Check for winner
+                const winner = checkWinner();
+                if (winner) {
+                    statusElement.textContent = `Congratulations! ${winner} is the Winner!`;
+                    statusElement.classList.add('you-won');
+                    return;
+                }
                 
                 // Switch players
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
