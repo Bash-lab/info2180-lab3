@@ -12,8 +12,20 @@ document.addEventListener('DOMContentLoaded', function() {
     let gameState = Array(9).fill(null);
     
     boardSquares.forEach((square, index) => {
+        // Exercise 3: Add hover effects
+        square.addEventListener('mouseenter', function() {
+            if (gameState[index] === null) {
+                this.classList.add('hover');
+            }
+        });
+        
+        square.addEventListener('mouseleave', function() {
+            this.classList.remove('hover');
+        });
+        
+        // Exercise 2: Click handler
         square.addEventListener('click', function() {
-            // Only proceed if square is empty
+             // Only proceed if square is empty
             if (gameState[index] === null) {
                 // Update game state
                 gameState[index] = currentPlayer;
